@@ -1,0 +1,49 @@
+name: Multi-Environment CI/CD
+
+on: [push]
+
+jobs:
+  test-suite:
+    runs-on: ubanyu-latest
+    steps:
+      -name: Checkout code
+       uses: actions/checkout@v3
+
+      -name: Run Automated Tests
+       run:
+         echo "Running Unit and Integration Tests"
+         sleep 3
+         echo "Tests Passed"
+
+  onebox:
+    runs-on: ubantu-latest
+    needs: test-suite
+    steps:
+      -name: Deploy to onebox
+       run:
+         echo "Deploying to  ine box Environment"
+         sleep 3
+         echo "Tests Passed"
+
+
+ staging:
+ runs-on: ubantu-latest
+ needs: onebox
+ steps:
+   -name: Deploy to Stagging
+    run:
+      echo "Deploying to Staging"
+      sleep 3
+      echo "Test Passed"
+
+ production:
+ runs-on: ubantu-latest
+ needs: staging
+ steps:
+   -name: Deploy to production
+    run:
+      echo "Deploying to Production"
+      sleep 3
+      echo "Production Deployment Suceesful"
+       
+       
